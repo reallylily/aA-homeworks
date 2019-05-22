@@ -37,17 +37,20 @@ describe Dessert do
   end
 
   describe "#mix!" do
-    it "shuffles the ingredient array" 
-    # do
-    #   array = cake.ingredients
-    #   expect(array).not_to receive(:shuffle!)
-    # end
-    # do
-    #   cake.add_ingredient("eggs")
-    #   cake.add_ingredient("milk")
-    #   cake.add_ingredient("flour")
-    #   expect(cake).to receive(:shuffle!)
-    # end
+    it "shuffles the ingredient array" do
+      ings = ['eggs', "milk", 'flour', "bears", 'honey']
+      cake.add_ingredient("eggs")
+      cake.add_ingredient("milk")
+      cake.add_ingredient("flour")
+      cake.add_ingredient("bears")
+      cake.add_ingredient("honey")
+      expect(cake.ingredients).to eq(ings)
+      # expect(cake).to receive(:mix!)
+      cake.mix!
+      expect(cake.ingredients).to_not eq(ings)
+      expect(cake.ingredients.sort).to eq(ings.sort)
+
+    end
   end
 
   describe "#eat" do
@@ -63,15 +66,14 @@ describe Dessert do
 
   describe "#serve" do
     it "contains the titleized version of the chef's name" do
-      # allow(chef).to receive(:name).and_return("Laura")
-      # allow(chef).to receive(:titleize).and_return("Chef #{@name} the Great Baker")
       expect(cake.serve).to include("Chef Laura the Great Baker")
     end
   end
 
   describe "#make_more" do
-    it "calls bake on the dessert's chef with the dessert passed in"
-      # allow(chef).to receive(:bake).and_return("Laura")
-      # expect(cake.chef).to receive(:bake)
+    it "calls bake on the dessert's chef with the dessert passed in" do
+      expect(cake.chef).to receive(:bake).with(cake)
+      cake.make_more
+    end
   end
 end
